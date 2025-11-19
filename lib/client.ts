@@ -6,66 +6,53 @@ const listClientsSchema = z.object({
 });
 
 const ClientSchema = z.object({
-  id: z.string(),
+  id: z.number(),
   token: z.string(),
   name: z.string(),
-  email: z.string(),
-  phone: z.string(),
-  birthday: z.string(),
+  first_name: z.string(),
+  last_name: z.string(),
+  initials: z.string(),
+  phone: z.string().nullable(),
+  email: z.string().nullable(),
+  date_of_birth: z.string().nullable(),
+});
+
+const ApiResponseSchema = z.object({
+  data: z.array(ClientSchema),
+  meta: z.object({
+    total_clients: z.number(),
+  }),
 });
 
 /**
- * Retrieves a list of clients along with for the current session.
+ * Retrieves a list of clients from the GlossGenius staging API.
  *
- * @return {Object} An object containing the businessToken, authToken, and an empty data array.
+ * @return {Object} An object containing the businessToken, authToken, client data array, and metadata.
  */
-export function listClients() {
+export async function listClients() {
   const {businessToken, authToken} = listClientsSchema.parse(process.env);
 
+  const response = await fetch(
+    "https://api.glossgenius-staging.com/v3/clients?limit=99999",
+    {
+      headers: {
+        accept: "application/json, text/plain, */*",
+        authorization: `Bearer ${authToken}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch clients: ${response.status} ${response.statusText}`
+    );
+  }
+
+  const json = await response.json();
+  const {data, meta} = ApiResponseSchema.parse(json);
+
   return {
-    businessToken,
-    authToken,
-    data: [
-      {
-        id: "client_001",
-        token: "tok_emma_johnson_2024",
-        name: "Emma Johnson",
-        email: "ltse+emma.johnson@glossgenius.com",
-        phone: "+1-415-555-0101",
-        birthday: "1992-03-15",
-      },
-      {
-        id: "client_002",
-        token: "tok_marcus_chen_2024",
-        name: "Marcus Chen",
-        email: "ltse+marcus.chen@glossgenius.com",
-        phone: "+1-415-555-0102",
-        birthday: "1985-07-22",
-      },
-      {
-        id: "client_003",
-        token: "tok_sofia_rodriguez_2024",
-        name: "Sofia Rodriguez",
-        email: "ltse+sofia.rodriguez@glossgenius.com",
-        phone: "+1-415-555-0103",
-        birthday: "1998-11-08",
-      },
-      {
-        id: "client_004",
-        token: "tok_aiden_patel_2024",
-        name: "Aiden Patel",
-        email: "ltse+aiden.patel@glossgenius.com",
-        phone: "+1-415-555-0104",
-        birthday: "1990-01-30",
-      },
-      {
-        id: "client_005",
-        token: "tok_olivia_martinez_2024",
-        name: "Olivia Martinez",
-        email: "ltse+olivia.martinez@glossgenius.com",
-        phone: "+1-415-555-0105",
-        birthday: "1987-12-14",
-      },
-    ],
+    data,
+    meta,
   };
 }
