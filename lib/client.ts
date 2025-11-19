@@ -11,6 +11,7 @@ const ClientSchema = z.object({
   name: z.string(),
   email: z.string(),
   phone: z.string(),
+  birthday: z.string(),
 });
 
 /**
@@ -31,6 +32,7 @@ export function listClients() {
         name: "Emma Johnson",
         email: "ltse+emma.johnson@glossgenius.com",
         phone: "+1-415-555-0101",
+        birthday: "1992-03-15",
       },
       {
         id: "client_002",
@@ -38,6 +40,7 @@ export function listClients() {
         name: "Marcus Chen",
         email: "ltse+marcus.chen@glossgenius.com",
         phone: "+1-415-555-0102",
+        birthday: "1985-07-22",
       },
       {
         id: "client_003",
@@ -45,6 +48,7 @@ export function listClients() {
         name: "Sofia Rodriguez",
         email: "ltse+sofia.rodriguez@glossgenius.com",
         phone: "+1-415-555-0103",
+        birthday: "1998-11-08",
       },
       {
         id: "client_004",
@@ -52,6 +56,7 @@ export function listClients() {
         name: "Aiden Patel",
         email: "ltse+aiden.patel@glossgenius.com",
         phone: "+1-415-555-0104",
+        birthday: "1990-01-30",
       },
       {
         id: "client_005",
@@ -59,6 +64,7 @@ export function listClients() {
         name: "Olivia Martinez",
         email: "ltse+olivia.martinez@glossgenius.com",
         phone: "+1-415-555-0105",
+        birthday: "1987-12-14",
       },
     ],
   };
