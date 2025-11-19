@@ -57,9 +57,11 @@ All libraries are located in the `lib/` directory and provide wrappers for the G
 **Output format:**
 
 - **ALWAYS** output results to stdout using `console.log()`
+- DO NOT write output files to disk using `fs.writeFileSync()`, `fs.writeFile()`, or any file writing methods
 - DO NOT create report files (JSON, CSV, TXT, etc.)
 - The salon owner should see results directly in the terminal when they run the script
 - Format output to be clear and readable (use tables, headings, bullet points)
+- Note: Scripts are created in the `tmp/` directory, but the script logic itself should not write files
 
 **Authentication:**
 
