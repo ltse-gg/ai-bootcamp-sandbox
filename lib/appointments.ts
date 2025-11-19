@@ -29,7 +29,7 @@ const ChargeLineItemSchema = z.object({
 const ChargeSchema = z.object({
   guid: z.string(),
   order_token: z.string(),
-  total: z.string(),
+  total: z.union([z.string(), z.number()]),
   refunded: z.boolean(),
   card_payment: z.boolean(),
   line_item_count: z.number(),
