@@ -88,6 +88,14 @@ const ApiResponseSchema = z.object({
   data: z.array(AppointmentSchema),
 });
 
+const DateRangeApiResponseSchema = z.object({
+  data: z.array(AppointmentSchema),
+  meta: z.object({
+    from: z.string(),
+    to: z.string(),
+  }),
+});
+
 /**
  * Retrieves past appointments for a specific client from the GlossGenius staging API.
  *
@@ -118,5 +126,55 @@ export async function listPastClientAppointments(clientId: number) {
 
   return {
     data,
+  };
+}
+
+/**
+ * Retrieves appointments within a date range for specific providers from the GlossGenius staging API.
+ *
+ * @param options - Query options
+ * @param options.from - Start date/time in ISO format (e.g., "2025-11-02T00:00:00.000-07:00")
+ * @param options.to - End date/time in ISO format (e.g., "2025-11-08T23:59:59.000-08:00")
+ * @param options.providerGuids - Array of provider GUIDs to filter by
+ * @return {Object} The API response with appointments data and date range metadata
+ */
+export async function listAppointmentsByDateRange(options: {
+  from: string;
+  to: string;
+  providerGuids: string[];
+}) {
+  const {authToken} = listAppointmentsSchema.parse(process.env);
+  const {from, to, providerGuids} = options;
+
+  // Build query parameters
+  const params = new URLSearchParams();
+  params.append("from", from);
+  params.append("to", to);
+  providerGuids.forEach((guid) => {
+    params.append("providers_guids[]", guid);
+  });
+
+  const response = await fetch(
+    `https://api.glossgenius-staging.com/v3/appointments?${params.toString()}`,
+    {
+      headers: {
+        accept: "application/json, text/plain, */*",
+        authorization: `Bearer ${authToken}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch appointments: ${response.status} ${response.statusText}`
+    );
+  }
+
+  const json = await response.json();
+  const {data, meta} = DateRangeApiResponseSchema.parse(json);
+
+  return {
+    data,
+    meta,
   };
 }
