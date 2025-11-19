@@ -1,4 +1,4 @@
-import {z} from "zod";
+import { z } from "zod";
 
 const listClientsSchema = z.object({
   businessToken: z.string(),
@@ -30,7 +30,7 @@ const ApiResponseSchema = z.object({
  * @return {Object} An object containing the businessToken, authToken, client data array, and metadata.
  */
 export async function listClients() {
-  const {businessToken, authToken} = listClientsSchema.parse(process.env);
+  const { authToken } = listClientsSchema.parse(process.env);
 
   const response = await fetch(
     "https://api.glossgenius-staging.com/v3/clients?limit=99999",
@@ -39,17 +39,17 @@ export async function listClients() {
         accept: "application/json, text/plain, */*",
         authorization: `Bearer ${authToken}`,
       },
-    }
+    },
   );
 
   if (!response.ok) {
     throw new Error(
-      `Failed to fetch clients: ${response.status} ${response.statusText}`
+      `Failed to fetch clients: ${response.status} ${response.statusText}`,
     );
   }
 
   const json = await response.json();
-  const {data, meta} = ApiResponseSchema.parse(json);
+  const { data, meta } = ApiResponseSchema.parse(json);
 
   return {
     data,

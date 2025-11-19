@@ -1,4 +1,4 @@
-import {z} from "zod";
+import { z } from "zod";
 
 const listAppointmentsSchema = z.object({
   authToken: z.string(),
@@ -103,7 +103,7 @@ const DateRangeApiResponseSchema = z.object({
  * @return {Object} The API response with past appointments data
  */
 export async function listPastClientAppointments(clientId: number) {
-  const {authToken} = listAppointmentsSchema.parse(process.env);
+  const { authToken } = listAppointmentsSchema.parse(process.env);
 
   const response = await fetch(
     `https://api.glossgenius-staging.com/v3/clients/${clientId}/appointments?appointment_type=past`,
@@ -112,17 +112,17 @@ export async function listPastClientAppointments(clientId: number) {
         accept: "application/json, text/plain, */*",
         authorization: `Bearer ${authToken}`,
       },
-    }
+    },
   );
 
   if (!response.ok) {
     throw new Error(
-      `Failed to fetch appointments: ${response.status} ${response.statusText}`
+      `Failed to fetch appointments: ${response.status} ${response.statusText}`,
     );
   }
 
   const json = await response.json();
-  const {data} = ApiResponseSchema.parse(json);
+  const { data } = ApiResponseSchema.parse(json);
 
   return {
     data,
@@ -143,8 +143,8 @@ export async function listAppointmentsByDateRange(options: {
   to: string;
   providerGuids: string[];
 }) {
-  const {authToken} = listAppointmentsSchema.parse(process.env);
-  const {from, to, providerGuids} = options;
+  const { authToken } = listAppointmentsSchema.parse(process.env);
+  const { from, to, providerGuids } = options;
 
   // Build query parameters
   const params = new URLSearchParams();
@@ -161,17 +161,17 @@ export async function listAppointmentsByDateRange(options: {
         accept: "application/json, text/plain, */*",
         authorization: `Bearer ${authToken}`,
       },
-    }
+    },
   );
 
   if (!response.ok) {
     throw new Error(
-      `Failed to fetch appointments: ${response.status} ${response.statusText}`
+      `Failed to fetch appointments: ${response.status} ${response.statusText}`,
     );
   }
 
   const json = await response.json();
-  const {data, meta} = DateRangeApiResponseSchema.parse(json);
+  const { data, meta } = DateRangeApiResponseSchema.parse(json);
 
   return {
     data,

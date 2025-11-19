@@ -21,7 +21,6 @@ build/
 *.swp
 *.swo
 *~
-.DS_Store
 
 # Testing
 coverage/
@@ -38,3 +37,4 @@ Thumbs.db
 # Temporary files
 *.tmp
 .cache/
+tmp/
