@@ -35,6 +35,12 @@ All libraries are located in the `lib/` directory and provide wrappers for the G
   - Returns: `{data: Appointment[]}`
   - Appointment fields: appointment details, services, charges, provider info, client info, dates/times
 
+- `listAppointmentsByDateRange(options)` - Returns appointments within a date range for specific providers
+  - Located: `lib/appointments.ts`
+  - Parameters: `{from: string, to: string, providerGuids: string[]}`
+  - Returns: `{data: Appointment[], meta: {from: string, to: string}}`
+  - Use ISO date format for from/to (e.g., "2025-11-02T00:00:00.000-07:00")
+
 **Authentication:**
 
 - All library functions use environment variables for authentication (`authToken`, `businessToken`)
@@ -64,6 +70,18 @@ All libraries are located in the `lib/` directory and provide wrappers for the G
 
 - Always run `npm run typecheck` after creating a script to verify it's valid
 - Fix any TypeScript errors before considering the script complete
+
+**Code formatting:**
+
+- Prettier is configured with `prettier-plugin-organize-imports` to automatically organize and sort imports
+- After creating or editing scripts, run `npm run format` to format all files
+- Use `npm run format:check` to verify files are formatted correctly without making changes
+- Follow the project's Prettier configuration:
+  - 2 spaces for indentation
+  - Semicolons required
+  - Double quotes for strings
+  - 100 character line width
+  - Trailing commas in multi-line structures
 
 ## Important Constraints
 
