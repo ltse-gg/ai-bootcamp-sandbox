@@ -88,8 +88,20 @@ All libraries are located in the `lib/` directory and provide wrappers for the G
 **DO NOT run scripts during this session:**
 
 - Scripts require authentication tokens that are only available when the user runs them in their own terminal
-- After creating a script, provide clear instructions on how to run it (e.g., `npm run dev tmp/your-script.ts`)
+- After creating a script, provide clear instructions on how to run it with proper environment variables
 - Do NOT attempt to execute scripts yourself using the Bash tool
+
+**How to provide run instructions to the user:**
+
+When you create a script, always provide instructions in this format:
+
+```bash
+authToken="YOUR_AUTH_TOKEN" businessToken="YOUR_BUSINESS_TOKEN" npx tsx tmp/your-script.ts
+```
+
+- Use `npx tsx` command followed by the script path
+- Show both `authToken` and `businessToken` environment variables as placeholders (both are required for validation)
+- Use the actual script path you created
 
 **Project structure:**
 
