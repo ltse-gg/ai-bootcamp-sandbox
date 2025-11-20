@@ -40,7 +40,7 @@ All libraries are located in the `lib/` directory and provide wrappers for the G
   - Parameters: `{from: string, to: string, providerGuids: string[]}`
   - Returns: `{data: Appointment[], meta: {from: string, to: string}}`
   - Use ISO date format for from/to (e.g., "2025-11-02T00:00:00.000-07:00")
-  - Appointments are sorted by date/time descending i.e. reverse chronological order
+  - Appointments are not sorted by date, so you must sort them yourself if needed
 
 **Authentication:**
 
