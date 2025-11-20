@@ -51,8 +51,10 @@ All libraries are located in the `lib/` directory and provide wrappers for the G
 **Location and naming:**
 
 - Create all scripts under the `tmp/` directory
-- Use descriptive names that reflect the script's purpose (e.g., `find-clients-without-recent-appointments.ts`)
-- Make sure the script name is unique - do not override existing scripts
+- **ALWAYS** prefix script filenames with a timestamp to prevent collisions: `YYYYMMDD-HHMMSS-descriptive-name.ts`
+- Use descriptive names that reflect the script's purpose
+- Example: `20251119-143052-find-clients-without-recent-appointments.ts`
+- The timestamp ensures each script is unique and prevents overwriting existing scripts
 
 **Output format:**
 
@@ -98,10 +100,10 @@ All libraries are located in the `lib/` directory and provide wrappers for the G
 When you create a script, always provide instructions in this format:
 
 ```bash
-authToken="YOUR_AUTH_TOKEN" businessToken="YOUR_BUSINESS_TOKEN" npx tsx tmp/your-script.ts
+authToken="YOUR_AUTH_TOKEN" businessToken="YOUR_BUSINESS_TOKEN" ./node_modules/.bin/tsx tmp/your-script.ts
 ```
 
-- Use `npx tsx` command followed by the script path
+- Use `./node_modules/.bin/tsx` command followed by the script path
 - Show both `authToken` and `businessToken` environment variables as placeholders (both are required for validation)
 - Use the actual script path you created
 
