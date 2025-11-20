@@ -98,6 +98,7 @@ const DateRangeApiResponseSchema = z.object({
 
 /**
  * Retrieves past appointments for a specific client from the GlossGenius staging API.
+ * The appointments are sorted by reverse chronological order.
  *
  * @param clientId - The client ID to fetch appointments for
  * @return {Object} The API response with past appointments data

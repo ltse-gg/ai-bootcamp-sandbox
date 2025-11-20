@@ -40,6 +40,7 @@ All libraries are located in the `lib/` directory and provide wrappers for the G
   - Parameters: `{from: string, to: string, providerGuids: string[]}`
   - Returns: `{data: Appointment[], meta: {from: string, to: string}}`
   - Use ISO date format for from/to (e.g., "2025-11-02T00:00:00.000-07:00")
+  - Appointments are sorted by date/time descending i.e. reverse chronological order
 
 **Authentication:**
 
@@ -54,6 +55,7 @@ All libraries are located in the `lib/` directory and provide wrappers for the G
 - **ALWAYS** prefix script filenames with a timestamp to prevent collisions: `YYYYMMDD-HHMMSS-descriptive-name.ts`
 - Use descriptive names that reflect the script's purpose
 - Example: `20251119-143052-find-clients-without-recent-appointments.ts`
+- The timestamp must be generated using bash command `date +%Y%m%d-%H%M%S`
 - The timestamp ensures each script is unique and prevents overwriting existing scripts
 
 **Output format:**
